@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.nous.weekly-library-canary</string>
+	<key>EnvironmentVariables</key>
+	<dict>
+		<key>HOME</key>
+		<string>/Users/madia</string>
+		<key>PATH</key>
+		<string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+		<key>LIBRARY_CANARY_VAULT</key>
+		<string>/Users/madia/nous-agaas/wiki</string>
+		<key>LIBRARY_CANARY_LOG_DIR</key>
+		<string>/Users/madia/nous-agaas/logs/canary</string>
+	</dict>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/bin/bash</string>
+		<string>/Users/madia/nous-agaas/wiki/tools/weekly_library_canary.sh</string>
+	</array>
+	<key>StandardErrorPath</key>
+	<string>/Users/madia/nous-agaas/logs/canary/launchd.err.log</string>
+	<key>StandardOutPath</key>
+	<string>/Users/madia/nous-agaas/logs/canary/launchd.out.log</string>
+	<key>StartCalendarInterval</key>
+	<dict>
+		<key>Weekday</key>
+		<integer>1</integer>
+		<key>Hour</key>
+		<integer>9</integer>
+		<key>Minute</key>
+		<integer>0</integer>
+	</dict>
+	<key>RunAtLoad</key>
+	<false/>
+</dict>
+</plist>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.nous.litellm-cost-alarm</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/opt/homebrew/bin/python3</string>
+        <string>/Users/madia/nous-agaas/tools/cost_alarm.py</string>
+        <string>--json</string>
+        <string>--hard-cap-usd</string>
+        <string>2.0</string>
+        <string>--pause-telegram-on-hard-cap</string>
+    </array>
+
+    <key>StartInterval</key>
+    <integer>1800</integer>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+        <key>HOME</key>
+        <string>/Users/madia</string>
+    </dict>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/madia/nous-agaas</string>
+
+    <key>StandardOutPath</key>
+    <string>/Users/madia/nous-agaas/logs/litellm-cost-alarm.out</string>
+
+    <key>StandardErrorPath</key>
+    <string>/Users/madia/nous-agaas/logs/litellm-cost-alarm.err</string>
+
+    <key>RunAtLoad</key>
+    <true/>
+</dict>
+</plist>

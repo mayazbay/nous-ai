@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.nous.cheap-pool-benchmark</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/Library/Frameworks/Python.framework/Versions/3.11/bin/python3</string>
+    <string>/Users/madia/nous-agaas/wiki/tools/cheap_pool_benchmark.py</string>
+    <string>--wiki</string>
+    <string>/Users/madia/nous-agaas/wiki</string>
+    <string>--ask-log</string>
+    <string>/Users/madia/nous-agaas/logs/ask-hierarchy.jsonl</string>
+    <string>--output-dir</string>
+    <string>/Users/madia/nous-agaas/wiki/pages/progress</string>
+    <string>--json</string>
+  </array>
+
+  <key>WorkingDirectory</key>
+  <string>/Users/madia/nous-agaas/wiki</string>
+
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Day</key>
+    <integer>1</integer>
+    <key>Hour</key>
+    <integer>4</integer>
+    <key>Minute</key>
+    <integer>0</integer>
+  </dict>
+
+  <key>RunAtLoad</key>
+  <false/>
+
+  <key>StandardOutPath</key>
+  <string>/Users/madia/nous-agaas/logs/cheap-pool-benchmark.out.log</string>
+
+  <key>StandardErrorPath</key>
+  <string>/Users/madia/nous-agaas/logs/cheap-pool-benchmark.err.log</string>
+
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>HOME</key>
+    <string>/Users/madia</string>
+    <key>PATH</key>
+    <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Frameworks/Python.framework/Versions/3.11/bin</string>
+    <key>PYTHONPATH</key>
+    <string>/Users/madia/nous-agaas/wiki:/Users/madia/nous-agaas/wiki/tools</string>
+  </dict>
+</dict>
+</plist>

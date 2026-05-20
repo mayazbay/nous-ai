@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.nous.todoist-comment-sweep</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/Library/Frameworks/Python.framework/Versions/3.11/bin/python3</string>
+    <string>/Users/madia/nous-agaas/wiki/tools/human_owner_reminder.py</string>
+    <string>--apply</string>
+    <string>--comment-sweep-only</string>
+    <string>--max-ai-requests-per-run</string>
+    <string>3</string>
+  </array>
+
+  <key>WorkingDirectory</key>
+  <string>/Users/madia/nous-agaas/wiki</string>
+
+  <key>StartInterval</key>
+  <integer>3600</integer>
+
+  <key>RunAtLoad</key>
+  <false/>
+
+  <key>StandardOutPath</key>
+  <string>/Users/madia/nous-agaas/logs/todoist-comment-sweep.out.log</string>
+
+  <key>StandardErrorPath</key>
+  <string>/Users/madia/nous-agaas/logs/todoist-comment-sweep.err.log</string>
+
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>HOME</key>
+    <string>/Users/madia</string>
+    <key>PATH</key>
+    <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Frameworks/Python.framework/Versions/3.11/bin</string>
+    <key>PYTHONPATH</key>
+    <string>/Users/madia/nous-agaas/wiki:/Users/madia/nous-agaas/wiki/tools</string>
+  </dict>
+</dict>
+</plist>

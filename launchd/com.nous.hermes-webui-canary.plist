@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.nous.hermes-webui-canary</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>/Users/madia/nous-agaas/wiki/tools/hermes_webui_canary.sh</string>
+    <string>run-foreground</string>
+  </array>
+
+  <key>WorkingDirectory</key>
+  <string>/Users/madia/.local/share/nous/hermes-webui</string>
+
+  <key>RunAtLoad</key>
+  <true/>
+
+  <key>KeepAlive</key>
+  <true/>
+
+  <key>ThrottleInterval</key>
+  <integer>30</integer>
+
+  <key>StandardOutPath</key>
+  <string>/Users/madia/nous-agaas/logs/hermes-webui-canary.out.log</string>
+
+  <key>StandardErrorPath</key>
+  <string>/Users/madia/nous-agaas/logs/hermes-webui-canary.err.log</string>
+
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>HOME</key>
+    <string>/Users/madia</string>
+    <key>PATH</key>
+    <string>/Users/madia/.local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Frameworks/Python.framework/Versions/3.11/bin</string>
+    <key>HERMES_WEBUI_ENV_FILE</key>
+    <string>/Users/madia/nous-agaas/secrets/hermes-webui.env</string>
+    <key>HERMES_WEBUI_APP_DIR</key>
+    <string>/Users/madia/.local/share/nous/hermes-webui</string>
+    <key>HERMES_WEBUI_PYTHON</key>
+    <string>/Users/madia/.hermes/hermes-agent/venv/bin/python</string>
+  </dict>
+</dict>
+</plist>

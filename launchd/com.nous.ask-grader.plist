@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  com.nous.ask-grader — Mercury Phase 1 grader cron.
+  Spec: pages/specs/2026-04-30-mercury-hybrid-retrieval-gap-analysis.md
+  Owner: Lane-2 (s103-mac-77714).
+
+  Cadence: every 5 minutes (300s). Cron staggers at +2 to dodge gbrain-autopilot
+  bursts (autoplan decision #8). On Air, the equivalent stagger is launchd's
+  StartCalendarInterval-with-Minute-mod-5+2.
+
+  Install path on Air (NOT this lane's job — parent session reviews + deploys):
+    cp tools/launchd/com.nous.ask-grader.plist ~/Library/LaunchAgents/
+    launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.nous.ask-grader.plist
+    launchctl enable gui/$(id -u)/com.nous.ask-grader
+
+  Required env when installed:
+    LITELLM_MASTER_KEY  — read by ask_grader.py; populated from Air's
+                          ~/nous-agaas/.env via a wrapper shell script,
+                          NOT hard-coded in this plist (avoids leaking
+                          secrets via plutil / launchctl print).
+
+  Logs:
+    /tmp/nous-ask-grader.out  (ok lines: {"ok":true, ...})
+    /tmp/nous-ask-grader.err  (sentinels: judge_failure / throttled / transport)
+
+  Cost guard: ask_grader.py self-throttles on ${ASK_GRADER_LOG} 7-day cumulative
+  > $10.50 (env GRADER_COST_CEILING_7D). Cron exits 3 (throttled) silently.
+
+  This file is Mac-built but expected to run on Air. The Mac wiki path
+  embedded below is intentional — adjust to ~/nous-agaas/tools/ on Air.
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>com.nous.ask-grader</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>-lc</string>
+    <!--
+      Wrapper sources Air's ~/nous-agaas/.env to pick up LITELLM_MASTER_KEY,
+      then invokes the grader. On Mac (this lane), set the env directly
+      before launching this plist for testing.
+    -->
+    <string>set -e; if [ -f "$HOME/nous-agaas/.env" ]; then set -a; . "$HOME/nous-agaas/.env"; set +a; fi; exec /usr/bin/env python3 "$HOME/nous-agaas/tools/ask_grader.py" --once</string>
+  </array>
+  <key>StartInterval</key><integer>300</integer>
+  <key>RunAtLoad</key><false/>
+  <key>StandardOutPath</key><string>/tmp/nous-ask-grader.out</string>
+  <key>StandardErrorPath</key><string>/tmp/nous-ask-grader.err</string>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>HOME</key><string>/Users/madia</string>
+    <key>PATH</key><string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+    <!-- Override LITELLM_BASE_URL only if Air is unreachable; default is
+         http://100.122.219.22:4000 (Tailscale) per ask_grader.py. -->
+  </dict>
+  <key>ProcessType</key><string>Background</string>
+  <key>LowPriorityIO</key><true/>
+  <key>Nice</key><integer>5</integer>
+</dict>
+</plist>

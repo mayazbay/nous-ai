@@ -1,0 +1,50 @@
+#!/bin/bash
+# prepare-commit-msg — stamp Session-Id trailer for cross-session attribution
+#
+# Source of truth: tools/git-hooks/prepare-commit-msg in the wiki repo.
+# Each working copy installs via:
+#   ln -sf ../../tools/git-hooks/prepare-commit-msg .git/hooks/prepare-commit-msg
+#
+# v1.0.0 — 2026-04-30 (session s2127-mac-63345)
+# Why: 2026-04-30 synthetic-red canary surfaced unprovable parallel-session
+# attribution; all commits use single git identity (Madi Ayazbay). Trailer
+# makes session attribution ground-truth-checkable from `git log` alone.
+
+set -e
+
+COMMIT_MSG_FILE="$1"
+COMMIT_SOURCE="$2"
+
+# Skip on merge/squash (they have their own composed messages)
+case "$COMMIT_SOURCE" in
+  merge|squash) exit 0 ;;
+esac
+
+# Idempotent: bail if Session-Id already present
+if grep -q '^Session-Id:' "$COMMIT_MSG_FILE" 2>/dev/null; then
+  exit 0
+fi
+
+# Resolve session id (priority order):
+#   1. $CLAUDE_SESSION_ID env var (set by harness)
+#   2. most-recent ~/.claude/projects/*/memory/MEMORY.md "- session-id:" line
+#   3. fallback: ad-hoc-<short-host>-<unix-ts>
+sid="${CLAUDE_SESSION_ID:-}"
+
+if [ -z "$sid" ]; then
+  newest=$(ls -t "$HOME"/.claude/projects/*/memory/MEMORY.md 2>/dev/null | head -1)
+  if [ -n "$newest" ] && [ -r "$newest" ]; then
+    sid=$(grep -E '^- session-id:' "$newest" 2>/dev/null | head -1 | sed -E 's/^- session-id:[[:space:]]*//')
+  fi
+fi
+
+if [ -z "$sid" ]; then
+  sid="ad-hoc-$(hostname -s 2>/dev/null || hostname)-$(date +%s)"
+fi
+
+# Inject as trailer (preferred) or append as fallback
+if ! git interpret-trailers --trailer "Session-Id: $sid" --in-place "$COMMIT_MSG_FILE" 2>/dev/null; then
+  printf '\nSession-Id: %s\n' "$sid" >> "$COMMIT_MSG_FILE"
+fi
+
+exit 0

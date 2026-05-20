@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+Launches nous_gpu_collector_health.sh every 300s on Air.
+Installation (Air-side):
+  scp tools/nous_gpu_collector_health.sh air:~/nous-agaas/tools/
+  scp tools/com.nous.nous-gpu-collector-health.plist air:~/Library/LaunchAgents/
+  ssh air 'chmod +x ~/nous-agaas/tools/nous_gpu_collector_health.sh'
+  ssh air 'launchctl bootout gui/$(id -u) ~/Library/LaunchAgents/com.nous.nous-gpu-collector-health.plist 2>/dev/null; launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.nous.nous-gpu-collector-health.plist'
+  ssh air 'launchctl list | grep nous-gpu-collector-health'
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.nous.nous-gpu-collector-health</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>-c</string>
+    <string>PATH=/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin /Users/madia/nous-agaas/tools/nous_gpu_collector_health.sh &gt;&gt; /Users/madia/nous-agaas/logs/collector-health.out 2&gt;&amp;1</string>
+  </array>
+
+  <key>StartInterval</key>
+  <integer>300</integer>
+
+  <key>RunAtLoad</key>
+  <true/>
+
+  <key>StandardOutPath</key>
+  <string>/Users/madia/nous-agaas/logs/collector-health.out</string>
+
+  <key>StandardErrorPath</key>
+  <string>/Users/madia/nous-agaas/logs/collector-health.err</string>
+</dict>
+</plist>

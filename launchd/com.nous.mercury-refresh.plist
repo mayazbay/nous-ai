@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.nous.mercury-refresh</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>-c</string>
+        <string>cd "/Users/madia/Documents/Projects/Nous AGaaS/Nous" &amp;&amp; .venv/bin/python tools/mercury_seed.py --apply &amp;&amp; bash tools/mercury_phase3_regen.sh --regen</string>
+    </array>
+    <key>StartInterval</key>
+    <integer>1800</integer>
+    <key>StandardOutPath</key>
+    <string>/Users/madia/.claude/logs/mercury-refresh.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/madia/.claude/logs/mercury-refresh.log</string>
+    <key>RunAtLoad</key>
+    <true/>
+</dict>
+</plist>

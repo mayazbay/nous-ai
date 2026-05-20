@@ -1,0 +1,219 @@
+#!/usr/bin/env python3
+"""
+Generate pages/audits/INDEX.md — a deterministic, regeneratable hub of all
+audit files in pages/audits/.
+
+Closes the Tier-A1 audit-orphan gap (4 audits orphaned at the time this hub
+was first generated, 2026-04-30), and provides library-grade discoverability
+for all 90+ audit files via static [[wikilinks]] (grep/gbrain/scanner-friendly,
+unlike the Dataview-based pages/dashboards/audits-index.md which only renders
+inside Obsidian).
+
+Clusters:
+  1. Library-grade (Tier policy + library audits)
+  2. Themed factory/infra audits
+  3. Numbered chronological audits (AUDIT-NNN-*)
+  4. Periodic receipts (lint, gbrain-weekly, baseline)
+  5. Other
+
+Re-run after adding new audits to refresh the hub. Idempotent.
+
+Usage:
+  python3 tools/audits_index_generate.py
+  python3 tools/audits_index_generate.py --check   # exit 1 if INDEX.md stale
+"""
+import argparse
+import re
+import sys
+from datetime import date as _date
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+AUDITS = ROOT / "pages" / "audits"
+INDEX_PATH = AUDITS / "INDEX.md"
+
+DATE_RE = re.compile(r"(\d{4}-\d{2}-\d{2})")
+
+
+def parse_frontmatter(text: str) -> dict:
+    m = re.match(r"^---\n(.*?)\n---", text, re.DOTALL)
+    if not m:
+        return {}
+    out = {}
+    for line in m.group(1).splitlines():
+        s = line.strip()
+        if not s or s.startswith("#"):
+            continue
+        if ":" in s:
+            k, v = s.split(":", 1)
+            out[k.strip()] = v.strip().strip('"').strip("'")
+    return out
+
+
+def extract_h1(text: str) -> str:
+    body = text.split("---\n", 2)[-1] if text.startswith("---") else text
+    for line in body.splitlines():
+        s = line.strip()
+        if s.startswith("# "):
+            return s[2:].strip()
+    return ""
+
+
+def date_from_name(stem: str) -> str:
+    m = DATE_RE.search(stem)
+    return m.group(1) if m else ""
+
+
+def collect_audits():
+    out = []
+    for p in sorted(AUDITS.glob("*.md")):
+        if p.name == "INDEX.md":
+            continue
+        try:
+            text = p.read_text(encoding="utf-8", errors="replace")
+        except Exception:
+            continue
+        fm = parse_frontmatter(text)
+        title = fm.get("title", "") or extract_h1(text)
+        d = fm.get("date", "") or date_from_name(p.stem)
+        status = fm.get("status", "")
+        out.append({
+            "stem": p.stem,
+            "title": title,
+            "date": d,
+            "status": status,
+        })
+    return out
+
+
+def cluster_for(stem: str) -> str:
+    if stem.startswith("AUDIT-LIBRARY-") or stem in (
+        "AUDIT-061-obsidian-gbrain-openclaw-library-2026-04-30",
+        "AUDIT-062-retrieval-quality-synthesis-2026-04-30",
+    ):
+        return "library"
+    if stem.startswith(("AUDIT-TELEGRAM-", "AUDIT-AIR-", "AUDIT-BDL-", "AUDIT-OPENCLAW-")):
+        return "themed"
+    if re.match(r"^AUDIT-\d{3}-", stem):
+        return "numbered"
+    if stem.startswith(("lint-", "gbrain-weekly-", "baseline-metrics-")):
+        return "periodic"
+    return "other"
+
+
+def numbered_sort_key(e):
+    m = re.match(r"^AUDIT-(\d{3})-", e["stem"])
+    n = int(m.group(1)) if m else 0
+    return (n, e["date"], e["stem"])
+
+
+def fmt_entry(e):
+    title = e["title"] or e["stem"]
+    bits = [f"[[{e['stem']}]]"]
+    if e["date"]:
+        bits.append(f"({e['date']})")
+    line = f"- {' '.join(bits)} — {title}"
+    if e["status"] and e["status"].lower() not in {"complete", "reviewed"}:
+        line += f" *[{e['status']}]*"
+    return line
+
+
+def render():
+    audits = collect_audits()
+    buckets = {"library": [], "themed": [], "numbered": [], "periodic": [], "other": []}
+    for a in audits:
+        buckets[cluster_for(a["stem"])].append(a)
+
+    buckets["library"].sort(key=lambda e: (e["date"], e["stem"]), reverse=True)
+    buckets["themed"].sort(key=lambda e: (e["date"], e["stem"]), reverse=True)
+    buckets["numbered"].sort(key=numbered_sort_key)
+    buckets["periodic"].sort(key=lambda e: (e["date"], e["stem"]), reverse=True)
+    buckets["other"].sort(key=lambda e: (e["date"], e["stem"]), reverse=True)
+
+    today = _date.today().isoformat()
+    total = sum(len(b) for b in buckets.values())
+
+    out = []
+    out.append("---")
+    out.append("type: index")
+    out.append("id: audits-index")
+    out.append('title: "Audits — library-grade hub (auto-generated)"')
+    out.append("tags: [index, audits, hub, library-grade]")
+    out.append(f"date: {today}")
+    out.append(f"last_updated: {today}")
+    out.append("status: reviewed")
+    out.append("source_count: 0")
+    out.append("related:")
+    out.append('  - "[[AUDIT-061-obsidian-gbrain-openclaw-library-2026-04-30]]"')
+    out.append('  - "[[dashboards/audits-index]]"')
+    out.append('  - "[[skills/gbrain-ops/skill]]"')
+    out.append("---")
+    out.append("")
+    out.append("# Audits — library-grade hub")
+    out.append("")
+    out.append(
+        "Static `[[wikilink]]` index of every audit under `pages/audits/`. "
+        "Auto-generated by `tools/audits_index_generate.py`; regenerate after "
+        "adding new audits. Companion to [[dashboards/audits-index]] (Dataview "
+        "live count) and [[AUDIT-061-obsidian-gbrain-openclaw-library-2026-04-30]] "
+        "(Tier policy). Authoritative Tier classifier lives in "
+        "`tools/library_quality_scan.py`."
+    )
+    out.append("")
+    out.append(f"**Total audits indexed:** {total}")
+    out.append("")
+
+    sections = [
+        ("library", "Library-grade audits (Tier policy + library scans)"),
+        ("themed", "Themed factory / infra audits"),
+        ("numbered", "Numbered chronological audits (AUDIT-NNN-*)"),
+        ("periodic", "Periodic receipts (lint, gbrain-weekly, baseline)"),
+        ("other", "Other audits"),
+    ]
+    for key, label in sections:
+        entries = buckets[key]
+        if not entries:
+            continue
+        out.append(f"## {label} ({len(entries)})")
+        out.append("")
+        for e in entries:
+            out.append(fmt_entry(e))
+        out.append("")
+
+    out.append("## See also")
+    out.append("")
+    out.append("- [[dashboards/audits-index]] — Dataview live-count companion")
+    out.append("- [[AUDIT-061-obsidian-gbrain-openclaw-library-2026-04-30]] — user-signed Tier policy")
+    out.append("- [[skills/gbrain-ops/skill]] — library-audit doctrine (AP-67)")
+    out.append("- [[index]] — vault root index")
+    out.append("")
+    return "\n".join(out)
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--check", action="store_true", help="Exit 1 if INDEX.md is stale.")
+    args = ap.parse_args()
+
+    new = render()
+    if args.check:
+        if not INDEX_PATH.exists():
+            print("INDEX.md missing", file=sys.stderr)
+            sys.exit(1)
+        cur = INDEX_PATH.read_text(encoding="utf-8")
+        # Ignore the auto-rewriting `date:` and `last_updated:` fields when
+        # comparing — those move every day even with no audit changes.
+        def normalize(s: str) -> str:
+            return re.sub(r"^(date|last_updated): \d{4}-\d{2}-\d{2}", r"\1: <DATE>", s, flags=re.MULTILINE)
+        if normalize(cur) == normalize(new):
+            print("INDEX.md up-to-date.")
+            sys.exit(0)
+        print("INDEX.md stale; re-run without --check to regenerate.", file=sys.stderr)
+        sys.exit(1)
+
+    INDEX_PATH.write_text(new, encoding="utf-8")
+    print(f"Wrote {INDEX_PATH.relative_to(ROOT)} ({len(new.splitlines())} lines).")
+
+
+if __name__ == "__main__":
+    main()
