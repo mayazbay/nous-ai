@@ -1,0 +1,8 @@
+{"event": "acquired", "token": "lk-claude-b5074e21-1779274760", "lane": "claude", "scope_paths": ["tools/*"], "session_id": "MacBook-Pro.local-24373-1779274760", "ts": "2026-05-20T15:59:20.896033+05:00", "ttl_sec": 600}
+{"event": "acquired", "token": "lk-claude-286275af-1779274761", "lane": "claude", "scope_paths": ["tools/*"], "session_id": "MacBook-Pro.local-24398-1779274761", "ts": "2026-05-20T15:59:21.029136+05:00", "ttl_sec": 600}
+{"event": "acquired", "token": "lk-claude-0777718b-1779274837", "lane": "claude", "scope_paths": ["tools/*"], "session_id": "MacBook-Pro.local-25694-1779274837", "ts": "2026-05-20T16:00:37.752872+05:00", "ttl_sec": 600}
+{"event": "acquired", "token": "lk-claude-d129ff56-1779274837", "lane": "claude", "scope_paths": ["tools/*"], "session_id": "MacBook-Pro.local-25719-1779274837", "ts": "2026-05-20T16:00:37.869491+05:00", "ttl_sec": 600}
+{"event": "reaped_stale", "token": "lk-claude-0777718b-1779274837", "ts": "2026-05-20T18:28:55.161655+05:00", "reason": "ttl_expired"}
+{"event": "reaped_stale", "token": "lk-claude-286275af-1779274761", "ts": "2026-05-20T18:28:55.161655+05:00", "reason": "ttl_expired"}
+{"event": "reaped_stale", "token": "lk-claude-b5074e21-1779274760", "ts": "2026-05-20T18:28:55.161655+05:00", "reason": "ttl_expired"}
+{"event": "reaped_stale", "token": "lk-claude-d129ff56-1779274837", "ts": "2026-05-20T18:28:55.161655+05:00", "reason": "ttl_expired"}

@@ -1,0 +1,18 @@
+# LAW-008 — Anti-Hallucination Banned Patterns
+# Patterns that must NEVER appear in agent output without evidence chain
+
+# Unverified numbers
+said "955 LU cameras"
+said "89% complete"
+said "everything works"
+"it is done" without showing output
+
+# Confident claims without verification
+"all tests pass" without running pytest
+"the API returns" without curl/request output
+"the database has" without query result
+
+# Time-based hallucinations
+"as of yesterday"
+"last updated recently"
+"the latest version"

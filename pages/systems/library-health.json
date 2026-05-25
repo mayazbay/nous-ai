@@ -1,0 +1,17 @@
+{
+  "ts": "2026-05-21T10:04:36.189486+05:00",
+  "host": "MacBook-Pro.local",
+  "obsidian_files": 3216,
+  "canonical_registry_size": 789,
+  "gbrain_indexed_chunks": 93,
+  "gbrain_pending_queue": 827,
+  "gbrain_db_exists": true,
+  "gbrain_sqlite_vec_loaded": true,
+  "openbrain_thoughts_local_cache": null,
+  "broken_links_last_audit": null,
+  "broken_links_count_last_audit": 0,
+  "title_drift_last_audit": null,
+  "title_drift_count_last_audit": 0,
+  "latest_failover_event_status": "ok",
+  "parity_manifest_sha256": "64b60f657288"
+}

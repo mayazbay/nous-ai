@@ -1,0 +1,573 @@
+{
+  "captured_at": "2026-04-28T10:13:21+0500",
+  "base_url": "http://127.0.0.1:4000/v1/chat/completions",
+  "case_count": 20,
+  "summary": {
+    "deepseek-v4-flash": {
+      "passed": 19,
+      "total": 20,
+      "pass_rate": 95.0,
+      "errors": 0,
+      "p50_latency_ms": 2246,
+      "max_latency_ms": 42952
+    },
+    "deepseek-v4-pro": {
+      "passed": 4,
+      "total": 20,
+      "pass_rate": 20.0,
+      "errors": 0,
+      "p50_latency_ms": 3680,
+      "max_latency_ms": 9173
+    },
+    "glm-5.1": {
+      "passed": 4,
+      "total": 20,
+      "pass_rate": 20.0,
+      "errors": 0,
+      "p50_latency_ms": 2682,
+      "max_latency_ms": 16658
+    }
+  },
+  "results": [
+    {
+      "model": "deepseek-v4-flash",
+      "case_id": "exact-token",
+      "passed": true,
+      "latency_ms": 3889,
+      "error": "",
+      "expected": "MODEL_BAKEOFF_OK",
+      "got": "MODEL_BAKEOFF_OK"
+    },
+    {
+      "model": "deepseek-v4-flash",
+      "case_id": "json-one-key",
+      "passed": true,
+      "latency_ms": 922,
+      "error": "",
+      "expected": "{\"status\":\"ok\"}",
+      "got": "{\"status\":\"ok\"}"
+    },
+    {
+      "model": "deepseek-v4-flash",
+      "case_id": "math-small",
+      "passed": true,
+      "latency_ms": 548,
+      "error": "",
+      "expected": "323",
+      "got": "323"
+    },
+    {
+      "model": "deepseek-v4-flash",
+      "case_id": "no-extra-words",
+      "passed": true,
+      "latency_ms": 596,
+      "error": "",
+      "expected": "alpha|beta|gamma",
+      "got": "alpha|beta|gamma"
+    },
+    {
+      "model": "deepseek-v4-flash",
+      "case_id": "russian-extract",
+      "passed": true,
+      "latency_ms": 1621,
+      "error": "",
+      "expected": "Денис",
+      "got": "Денис"
+    },
+    {
+      "model": "deepseek-v4-flash",
+      "case_id": "priority",
+      "passed": true,
+      "latency_ms": 4533,
+      "error": "",
+      "expected": "P1",
+      "got": "P1"
+    },
+    {
+      "model": "deepseek-v4-flash",
+      "case_id": "date-format",
+      "passed": true,
+      "latency_ms": 3381,
+      "error": "",
+      "expected": "2026-04-27",
+      "got": "2026-04-27"
+    },
+    {
+      "model": "deepseek-v4-flash",
+      "case_id": "boolean",
+      "passed": true,
+      "latency_ms": 2246,
+      "error": "",
+      "expected": "false",
+      "got": "false"
+    },
+    {
+      "model": "deepseek-v4-flash",
+      "case_id": "short-summary",
+      "passed": true,
+      "latency_ms": 9465,
+      "error": "",
+      "expected": "^\\S+\\s+\\S+\\s+\\S+\\s+\\S+\\s+\\S+\\.?$",
+      "got": "Notion token missing blocks sync."
+    },
+    {
+      "model": "deepseek-v4-flash",
+      "case_id": "csv",
+      "passed": true,
+      "latency_ms": 1612,
+      "error": "",
+      "expected": "task,owner,priority",
+      "got": "task,owner,priority"
+    },
+    {
+      "model": "deepseek-v4-flash",
+      "case_id": "classification",
+      "passed": true,
+      "latency_ms": 1974,
+      "error": "",
+      "expected": "auth",
+      "got": "auth"
+    },
+    {
+      "model": "deepseek-v4-flash",
+      "case_id": "guardrail",
+      "passed": true,
+      "latency_ms": 1457,
+      "error": "",
+      "expected": "NO",
+      "got": "NO"
+    },
+    {
+      "model": "deepseek-v4-flash",
+      "case_id": "source-truth",
+      "passed": true,
+      "latency_ms": 3052,
+      "error": "",
+      "expected": "Obsidian",
+      "got": "Obsidian"
+    },
+    {
+      "model": "deepseek-v4-flash",
+      "case_id": "urgent-terms",
+      "passed": false,
+      "latency_ms": 1628,
+      "error": "",
+      "expected": "URGENT",
+      "got": "UR"
+    },
+    {
+      "model": "deepseek-v4-flash",
+      "case_id": "nonurgent",
+      "passed": true,
+      "latency_ms": 42952,
+      "error": "",
+      "expected": "HOLD",
+      "got": "HOLD"
+    },
+    {
+      "model": "deepseek-v4-flash",
+      "case_id": "route-model",
+      "passed": true,
+      "latency_ms": 2689,
+      "error": "",
+      "expected": "deepseek-v4-flash",
+      "got": "deepseek-v4-flash"
+    },
+    {
+      "model": "deepseek-v4-flash",
+      "case_id": "grok-role",
+      "passed": true,
+      "latency_ms": 2775,
+      "error": "",
+      "expected": "second-opinion",
+      "got": "second-opinion"
+    },
+    {
+      "model": "deepseek-v4-flash",
+      "case_id": "satory",
+      "passed": true,
+      "latency_ms": 553,
+      "error": "",
+      "expected": "BDL+Cerebro",
+      "got": "BDL+Cerebro"
+    },
+    {
+      "model": "deepseek-v4-flash",
+      "case_id": "musk-step",
+      "passed": true,
+      "latency_ms": 1245,
+      "error": "",
+      "expected": "delete",
+      "got": "delete"
+    },
+    {
+      "model": "deepseek-v4-flash",
+      "case_id": "skillify",
+      "passed": true,
+      "latency_ms": 5006,
+      "error": "",
+      "expected": "SKILL.md+timeline",
+      "got": "SKILL.md+timeline"
+    },
+    {
+      "model": "deepseek-v4-pro",
+      "case_id": "exact-token",
+      "passed": true,
+      "latency_ms": 2379,
+      "error": "",
+      "expected": "MODEL_BAKEOFF_OK",
+      "got": "MODEL_BAKEOFF_OK"
+    },
+    {
+      "model": "deepseek-v4-pro",
+      "case_id": "json-one-key",
+      "passed": false,
+      "latency_ms": 3203,
+      "error": "",
+      "expected": "{\"status\":\"ok\"}",
+      "got": ""
+    },
+    {
+      "model": "deepseek-v4-pro",
+      "case_id": "math-small",
+      "passed": true,
+      "latency_ms": 3775,
+      "error": "",
+      "expected": "323",
+      "got": "323"
+    },
+    {
+      "model": "deepseek-v4-pro",
+      "case_id": "no-extra-words",
+      "passed": false,
+      "latency_ms": 4051,
+      "error": "",
+      "expected": "alpha|beta|gamma",
+      "got": "alpha|beta|"
+    },
+    {
+      "model": "deepseek-v4-pro",
+      "case_id": "russian-extract",
+      "passed": false,
+      "latency_ms": 2824,
+      "error": "",
+      "expected": "Денис",
+      "got": ""
+    },
+    {
+      "model": "deepseek-v4-pro",
+      "case_id": "priority",
+      "passed": false,
+      "latency_ms": 4293,
+      "error": "",
+      "expected": "P1",
+      "got": ""
+    },
+    {
+      "model": "deepseek-v4-pro",
+      "case_id": "date-format",
+      "passed": false,
+      "latency_ms": 3950,
+      "error": "",
+      "expected": "2026-04-27",
+      "got": ""
+    },
+    {
+      "model": "deepseek-v4-pro",
+      "case_id": "boolean",
+      "passed": false,
+      "latency_ms": 3734,
+      "error": "",
+      "expected": "false",
+      "got": ""
+    },
+    {
+      "model": "deepseek-v4-pro",
+      "case_id": "short-summary",
+      "passed": false,
+      "latency_ms": 3011,
+      "error": "",
+      "expected": "^\\S+\\s+\\S+\\s+\\S+\\s+\\S+\\s+\\S+\\.?$",
+      "got": ""
+    },
+    {
+      "model": "deepseek-v4-pro",
+      "case_id": "csv",
+      "passed": false,
+      "latency_ms": 5625,
+      "error": "",
+      "expected": "task,owner,priority",
+      "got": ""
+    },
+    {
+      "model": "deepseek-v4-pro",
+      "case_id": "classification",
+      "passed": false,
+      "latency_ms": 3680,
+      "error": "",
+      "expected": "auth",
+      "got": ""
+    },
+    {
+      "model": "deepseek-v4-pro",
+      "case_id": "guardrail",
+      "passed": true,
+      "latency_ms": 2053,
+      "error": "",
+      "expected": "NO",
+      "got": "NO"
+    },
+    {
+      "model": "deepseek-v4-pro",
+      "case_id": "source-truth",
+      "passed": false,
+      "latency_ms": 3058,
+      "error": "",
+      "expected": "Obsidian",
+      "got": ""
+    },
+    {
+      "model": "deepseek-v4-pro",
+      "case_id": "urgent-terms",
+      "passed": false,
+      "latency_ms": 3680,
+      "error": "",
+      "expected": "URGENT",
+      "got": ""
+    },
+    {
+      "model": "deepseek-v4-pro",
+      "case_id": "nonurgent",
+      "passed": false,
+      "latency_ms": 2552,
+      "error": "",
+      "expected": "HOLD",
+      "got": ""
+    },
+    {
+      "model": "deepseek-v4-pro",
+      "case_id": "route-model",
+      "passed": true,
+      "latency_ms": 8342,
+      "error": "",
+      "expected": "deepseek-v4-flash",
+      "got": "deepseek-v4-flash"
+    },
+    {
+      "model": "deepseek-v4-pro",
+      "case_id": "grok-role",
+      "passed": false,
+      "latency_ms": 3345,
+      "error": "",
+      "expected": "second-opinion",
+      "got": ""
+    },
+    {
+      "model": "deepseek-v4-pro",
+      "case_id": "satory",
+      "passed": false,
+      "latency_ms": 2988,
+      "error": "",
+      "expected": "BDL+Cerebro",
+      "got": "BDL+C"
+    },
+    {
+      "model": "deepseek-v4-pro",
+      "case_id": "musk-step",
+      "passed": false,
+      "latency_ms": 9173,
+      "error": "",
+      "expected": "delete",
+      "got": ""
+    },
+    {
+      "model": "deepseek-v4-pro",
+      "case_id": "skillify",
+      "passed": false,
+      "latency_ms": 4316,
+      "error": "",
+      "expected": "SKILL.md+timeline",
+      "got": ""
+    },
+    {
+      "model": "glm-5.1",
+      "case_id": "exact-token",
+      "passed": true,
+      "latency_ms": 1531,
+      "error": "",
+      "expected": "MODEL_BAKEOFF_OK",
+      "got": "MODEL_BAKEOFF_OK"
+    },
+    {
+      "model": "glm-5.1",
+      "case_id": "json-one-key",
+      "passed": false,
+      "latency_ms": 2254,
+      "error": "",
+      "expected": "{\"status\":\"ok\"}",
+      "got": ""
+    },
+    {
+      "model": "glm-5.1",
+      "case_id": "math-small",
+      "passed": true,
+      "latency_ms": 2780,
+      "error": "",
+      "expected": "323",
+      "got": "323"
+    },
+    {
+      "model": "glm-5.1",
+      "case_id": "no-extra-words",
+      "passed": false,
+      "latency_ms": 4516,
+      "error": "",
+      "expected": "alpha|beta|gamma",
+      "got": ""
+    },
+    {
+      "model": "glm-5.1",
+      "case_id": "russian-extract",
+      "passed": false,
+      "latency_ms": 2777,
+      "error": "",
+      "expected": "Денис",
+      "got": ""
+    },
+    {
+      "model": "glm-5.1",
+      "case_id": "priority",
+      "passed": false,
+      "latency_ms": 934,
+      "error": "",
+      "expected": "P1",
+      "got": ""
+    },
+    {
+      "model": "glm-5.1",
+      "case_id": "date-format",
+      "passed": false,
+      "latency_ms": 3791,
+      "error": "",
+      "expected": "2026-04-27",
+      "got": ""
+    },
+    {
+      "model": "glm-5.1",
+      "case_id": "boolean",
+      "passed": false,
+      "latency_ms": 3103,
+      "error": "",
+      "expected": "false",
+      "got": ""
+    },
+    {
+      "model": "glm-5.1",
+      "case_id": "short-summary",
+      "passed": false,
+      "latency_ms": 2682,
+      "error": "",
+      "expected": "^\\S+\\s+\\S+\\s+\\S+\\s+\\S+\\s+\\S+\\.?$",
+      "got": ""
+    },
+    {
+      "model": "glm-5.1",
+      "case_id": "csv",
+      "passed": true,
+      "latency_ms": 4091,
+      "error": "",
+      "expected": "task,owner,priority",
+      "got": "task,owner,priority"
+    },
+    {
+      "model": "glm-5.1",
+      "case_id": "classification",
+      "passed": false,
+      "latency_ms": 1375,
+      "error": "",
+      "expected": "auth",
+      "got": ""
+    },
+    {
+      "model": "glm-5.1",
+      "case_id": "guardrail",
+      "passed": true,
+      "latency_ms": 1902,
+      "error": "",
+      "expected": "NO",
+      "got": "NO"
+    },
+    {
+      "model": "glm-5.1",
+      "case_id": "source-truth",
+      "passed": false,
+      "latency_ms": 16658,
+      "error": "",
+      "expected": "Obsidian",
+      "got": ""
+    },
+    {
+      "model": "glm-5.1",
+      "case_id": "urgent-terms",
+      "passed": false,
+      "latency_ms": 1532,
+      "error": "",
+      "expected": "URGENT",
+      "got": ""
+    },
+    {
+      "model": "glm-5.1",
+      "case_id": "nonurgent",
+      "passed": false,
+      "latency_ms": 1425,
+      "error": "",
+      "expected": "HOLD",
+      "got": ""
+    },
+    {
+      "model": "glm-5.1",
+      "case_id": "route-model",
+      "passed": false,
+      "latency_ms": 4513,
+      "error": "",
+      "expected": "deepseek-v4-flash",
+      "got": ""
+    },
+    {
+      "model": "glm-5.1",
+      "case_id": "grok-role",
+      "passed": false,
+      "latency_ms": 2011,
+      "error": "",
+      "expected": "second-opinion",
+      "got": ""
+    },
+    {
+      "model": "glm-5.1",
+      "case_id": "satory",
+      "passed": false,
+      "latency_ms": 1176,
+      "error": "",
+      "expected": "BDL+Cerebro",
+      "got": ""
+    },
+    {
+      "model": "glm-5.1",
+      "case_id": "musk-step",
+      "passed": false,
+      "latency_ms": 2187,
+      "error": "",
+      "expected": "delete",
+      "got": ""
+    },
+    {
+      "model": "glm-5.1",
+      "case_id": "skillify",
+      "passed": false,
+      "latency_ms": 3131,
+      "error": "",
+      "expected": "SKILL.md+timeline",
+      "got": ""
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "algo": "sha256",
+  "host": "Madis-MacBook-Air-2.local",
+  "ts": "2026-05-25T10:20:18.287823+05:00",
+  "manifest_sha256": "ddc73dd9e3271ac66dc192ab4b663a4375560325955a7620e514b45d97dc5191",
+  "files": {
+    "pages/systems/model-failover-ledger.jsonl": "e6583ce712419b10b60df5bf32f41613991c08f925f35d6154c2ac80d5071500",
+    "pages/systems/MODEL-FAILOVER-LATEST.md": "f4cfec55a259f8dfb4625c4cb2d1060835e4c43fdef5008dfd8a559580afaf0c",
+    "pages/systems/AGENT-CONTINUITY-PACKET.md": "8c7090c1fcfdbe3a2b76d9429595be470df46a96aed67ef69b8eba5e212e9cd4",
+    "pages/progress/HANDOFF-AUTO-LATEST.symlink": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "pages/systems/parity-manifest.txt": "4eb1ae307f654ce2575fc1608d5730aa7180b06c66a82001893078bfedb02aa6",
+    "STATUS.md": "9dd0dc71536acc207f57d25661b4c25791883b920df118cc03d851ecae512b3f",
+    "TASK_QUEUE.md": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "pages/systems/lane-locks.json": "8cc2fdf5d2aec65f0be0d7ec793352957d0256fba22ee118e7e06f155a400511",
+    "pages/systems/tasks.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "pages/systems/canonical-registry.jsonl": "235cad25d8a7945240d2196edfdb96d2e60add33eec97a2301e362442045b368",
+    "pages/systems/library-health.json": "932c7853fd601353f5b6de5bfee8ab2fdb937ac88bd72ef5ceb97ca6035473d3",
+    "pages/systems/LIBRARY-HEALTH.md": "fd41675da97f7b04f7a5fb8ccd2f16437a2479619ad22f6d119b5ea292f79ced",
+    ".gbrain/manifest.json": "ca621f45f3eed059f85922c0919ad4f9b2ff7ce04275a532e60b3158fbb829e4"
+  }
+}

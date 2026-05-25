@@ -1,0 +1,20 @@
+# Files hashed in listed order to produce manifest_sha256.
+# Empty lines + lines starting with # are ignored.
+# Add files here, never reorder existing rows.
+# Owners across ships: Ship 1 sets the first 5 rows; Ship 2 appends STATUS.md, TASK_QUEUE.md,
+# pages/systems/lane-locks.json; Ship 3 appends pages/systems/canonical-registry.jsonl.
+pages/systems/model-failover-ledger.jsonl
+pages/systems/MODEL-FAILOVER-LATEST.md
+pages/systems/AGENT-CONTINUITY-PACKET.md
+pages/progress/HANDOFF-AUTO-LATEST.symlink
+pages/systems/parity-manifest.txt
+# Ship 2 — atomic lane control plane (Plan §5)
+STATUS.md
+TASK_QUEUE.md
+pages/systems/lane-locks.json
+pages/systems/tasks.jsonl
+# Ship 3 — unified library graph (Plan §6)
+pages/systems/canonical-registry.jsonl
+pages/systems/library-health.json
+pages/systems/LIBRARY-HEALTH.md
+.gbrain/manifest.json

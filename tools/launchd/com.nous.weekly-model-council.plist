@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.nous.weekly-model-council</string>
+
+  <!--
+    Saturday 03:00 KZT model-tier review routine (moonlit-pnueli P3.3).
+    DO NOT launchctl bootstrap until 3-stage dry-run validated:
+      (a) Mon HH:14 dry-run            python3 tools/weekly_model_council.py --dry-run
+      (b) Wed HH:14 paid no-telegram   python3 tools/weekly_model_council.py --cap-usd 1.00 --skip-telegram
+      (c) Thu HH:14 full live          python3 tools/weekly_model_council.py --telegram
+      (d) launchctl bootstrap gui/501 ~/Library/LaunchAgents/com.nous.weekly-model-council.plist
+    First scheduled fire: Sat 2026-05-30 03:00 KZT.
+  -->
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/Library/Frameworks/Python.framework/Versions/3.11/bin/python3</string>
+    <string>/Users/madia/nous-agaas/wiki/tools/weekly_model_council.py</string>
+    <string>--telegram</string>
+    <string>--cap-usd</string>
+    <string>3.00</string>
+    <string>--json</string>
+  </array>
+
+  <key>WorkingDirectory</key>
+  <string>/Users/madia/nous-agaas/wiki</string>
+
+  <!-- TZ=Asia/Almaty makes launchd's calendar fire in KZT, not UTC. -->
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Weekday</key>
+    <integer>6</integer>
+    <key>Hour</key>
+    <integer>3</integer>
+    <key>Minute</key>
+    <integer>0</integer>
+  </dict>
+
+  <key>RunAtLoad</key>
+  <false/>
+
+  <key>StandardOutPath</key>
+  <string>/Users/madia/nous-agaas/logs/weekly-model-council.out.log</string>
+
+  <key>StandardErrorPath</key>
+  <string>/Users/madia/nous-agaas/logs/weekly-model-council.err.log</string>
+
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>HOME</key>
+    <string>/Users/madia</string>
+    <key>PATH</key>
+    <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Frameworks/Python.framework/Versions/3.11/bin</string>
+    <key>PYTHONPATH</key>
+    <string>/Users/madia/nous-agaas/wiki:/Users/madia/nous-agaas/wiki/tools</string>
+    <key>TZ</key>
+    <string>Asia/Almaty</string>
+    <!-- Subscription-first amendment: paid API allowed for the weekly council
+         with explicit cap + reason. Do NOT widen this without bumping
+         ceo-hierarchy doctrine. -->
+    <key>NOUS_PAID_API_ALLOWED</key>
+    <string>1</string>
+    <key>NOUS_PAID_API_CAP_USD</key>
+    <string>3.00</string>
+    <key>NOUS_PAID_API_REASON</key>
+    <string>weekly-model-council Sat 03:00 KZT routine; per moonlit-pnueli P3.3 (ceo-hierarchy v1.10.14 → planned v2.0.0)</string>
+  </dict>
+</dict>
+</plist>

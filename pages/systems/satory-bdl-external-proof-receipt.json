@@ -1,0 +1,11 @@
+{
+  "status": "requested",
+  "source": "",
+  "received_at": "",
+  "owner": "Asyl / Denis",
+  "evidence": "",
+  "http_status": null,
+  "endpoint": "",
+  "requested_at": "2026-05-17T11:17:00+05:00",
+  "instructions": "Flip status to received only after Asyl provides PSK/endpoint proof or Denis provides an HTTP-200 egress probe from inside Satory."
+}

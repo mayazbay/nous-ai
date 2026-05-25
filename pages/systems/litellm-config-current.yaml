@@ -1,0 +1,130 @@
+model_list:
+- model_name: opus
+  litellm_params:
+    model: anthropic/claude-opus-4-7
+    api_key: os.environ/ANTHROPIC_API_KEY
+    max_tokens: 8192
+    timeout: 240
+- model_name: glm-5.1
+  litellm_params:
+    model: openrouter/z-ai/glm-5.1
+    api_key: os.environ/OPENROUTER_API_KEY
+    max_tokens: 2048
+    timeout: 120
+- model_name: deepseek-v4-flash
+  litellm_params:
+    model: openrouter/deepseek/deepseek-v4-flash
+    api_key: os.environ/OPENROUTER_API_KEY
+    max_tokens: 2048
+    timeout: 120
+- model_name: deepseek-v4-pro
+  litellm_params:
+    model: openrouter/deepseek/deepseek-v4-pro:nitro
+    api_key: os.environ/OPENROUTER_API_KEY
+    max_tokens: 4096
+    timeout: 240
+- model_name: glm-4.5-flash
+  litellm_params:
+    model: zai/glm-4.5-flash
+    api_key: os.environ/ZAI_API_KEY
+    max_tokens: 8192
+    timeout: 120
+- model_name: grok-reasoning
+  litellm_params:
+    model: xai/grok-4.3
+    api_key: os.environ/XAI_API_KEY
+    max_tokens: 8192
+    timeout: 240
+- model_name: grok-code-fast
+  litellm_params:
+    model: xai/grok-4.3
+    api_key: os.environ/XAI_API_KEY
+    max_tokens: 4096
+    timeout: 60
+- model_name: kimi-k2.6
+  litellm_params:
+    model: openrouter/moonshotai/kimi-k2.6
+    api_key: os.environ/OPENROUTER_API_KEY
+    max_tokens: 1024
+    timeout: 180
+- model_name: sonnet
+  litellm_params:
+    model: anthropic/claude-sonnet-4-6
+    api_key: os.environ/ANTHROPIC_API_KEY
+    max_tokens: 8192
+    timeout: 180
+- model_name: sonnet-4-5-thinking
+  litellm_params:
+    model: anthropic/claude-sonnet-4-5-20250929
+    api_key: os.environ/ANTHROPIC_API_KEY
+    max_tokens: 4096
+    timeout: 90
+- model_name: haiku-4-5
+  litellm_params:
+    model: anthropic/claude-haiku-4-5-20251001
+    api_key: os.environ/ANTHROPIC_API_KEY
+    max_tokens: 4096
+    timeout: 60
+- model_name: text-embedding-3-large
+  litellm_params:
+    model: gemini/gemini-embedding-001
+    api_key: os.environ/GOOGLE_API_KEY
+    timeout: 120
+router_settings:
+  routing_strategy: simple-shuffle
+  num_retries: 1
+  timeout: 120
+  allowed_fails: 3
+  cooldown_time: 30
+  fallbacks:
+  - grok-reasoning:
+    - sonnet-4-5-thinking
+    - deepseek-v4-flash
+    - haiku-4-5
+  - opus:
+    - sonnet
+    - deepseek-v4-flash
+    - haiku-4-5
+  - sonnet-4-5-thinking:
+    - opus
+    - sonnet
+    - deepseek-v4-flash
+    - haiku-4-5
+  - grok-code-fast:
+    - deepseek-v4-flash
+    - grok-reasoning
+  - kimi-k2.6:
+    - deepseek-v4-flash
+    - grok-reasoning
+  - deepseek-v4-flash:
+    - grok-reasoning
+    - sonnet
+    - haiku-4-5
+  - deepseek-v4-pro:
+    - deepseek-v4-flash
+    - grok-reasoning
+    - sonnet
+  - glm-5.1:
+    - glm-4.5-flash
+    - deepseek-v4-flash
+    - grok-reasoning
+    - sonnet
+  - glm-4.5-flash:
+    - deepseek-v4-flash
+    - grok-reasoning
+litellm_settings:
+  max_budget: 30.0
+  budget_duration: 1d
+  set_verbose: false
+  json_logs: true
+  drop_params: true
+  cache: true
+  cache_params:
+    type: local
+    ttl: 3600
+  success_callback:
+  - langfuse
+  turn_off_message_logging: true
+  redact_user_api_key_info: true
+general_settings:
+  master_key: os.environ/LITELLM_MASTER_KEY

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.nous.pipeline-weekly-digest</string>
+
+  <!--
+    Weekly gbrain-native CRM digest (moonlit-pnueli P5.1 council verdict 2026-05-23).
+    Fires Saturdays at 09:00 KZT, pushes Russian-friendly summary via tg_send.sh to
+    Madi's chat (110793056). Russian stage labels, owner accountability,
+    upcoming deadlines, recent activity.
+
+    DO NOT launchctl bootstrap until Madi seeds the first real deal at
+    pages/deals/DEAL-<date>-<slug>.md — otherwise the digest will say
+    "Активных сделок нет" (no active deals) and waste a notification.
+
+    Bootstrap when ready:
+      cp tools/launchd/com.nous.pipeline-weekly-digest.plist ~/Library/LaunchAgents/
+      launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.nous.pipeline-weekly-digest.plist
+      launchctl print gui/$(id -u)/com.nous.pipeline-weekly-digest
+
+    Test before bootstrap: see pages/skills/gbrain-deals/SKILL.md for CLI flags.
+  -->
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/Library/Frameworks/Python.framework/Versions/3.11/bin/python3</string>
+    <string>/Users/madia/nous-agaas/wiki/tools/deals_pipeline_view.py</string>
+    <string>--weekly</string>
+    <string>--tg-send</string>
+    <string>--json</string>
+  </array>
+
+  <key>WorkingDirectory</key>
+  <string>/Users/madia/nous-agaas/wiki</string>
+
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Weekday</key>
+    <integer>6</integer>
+    <key>Hour</key>
+    <integer>9</integer>
+    <key>Minute</key>
+    <integer>0</integer>
+  </dict>
+
+  <key>RunAtLoad</key>
+  <false/>
+
+  <key>StandardOutPath</key>
+  <string>/Users/madia/nous-agaas/logs/pipeline-weekly-digest.out.log</string>
+
+  <key>StandardErrorPath</key>
+  <string>/Users/madia/nous-agaas/logs/pipeline-weekly-digest.err.log</string>
+
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>HOME</key>
+    <string>/Users/madia</string>
+    <key>PATH</key>
+    <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Frameworks/Python.framework/Versions/3.11/bin</string>
+    <key>PYTHONPATH</key>
+    <string>/Users/madia/nous-agaas/wiki:/Users/madia/nous-agaas/wiki/tools</string>
+    <key>TZ</key>
+    <string>Asia/Almaty</string>
+  </dict>
+</dict>
+</plist>
